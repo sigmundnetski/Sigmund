@@ -17,7 +17,7 @@ namespace Sigmund
         {
             var w = new Watchdog();
             w.startWatch();
-            //Log.say("Sigmund online");
+            Log.say("Sigmund online");
             w.RunPlugin("TestPlugin"); // temp for testing
         }
     }

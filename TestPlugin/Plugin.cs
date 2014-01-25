@@ -18,10 +18,6 @@ namespace Plugin
                 try
                 {
                     t.MainLoop();
-                    //t.StartGame();
-                    //t.PlayHand();
-                    //t.DoMinion();
-                    //t.TryAttack();
                 }
                 catch (Exception ex)
                 {
