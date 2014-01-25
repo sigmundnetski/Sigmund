@@ -36,6 +36,13 @@ TestPlugin: example plugin to automate playing against practice AI
 
 HearthstoneExtract: disassembled source from an older version of the game. Kept in the solution for easy searching (eg. find all references) but not always 100% correct. Use Reflector on the current Assembly-CSharp to double check.
 
+Known Issues
+============
+
+ * Too many hacky uses of Thread.Sleep to avoid animation issues, timing issues, etc. These should all be changed to instead wait until the event in question occurs/finishes, but that requires a better understanding of them.
+ * Minions that require a target when they are dropped into play (eg. Shattered Sun Cleric) aren't supported and will usually cause a crash after the bot tries to do them anyway.
+ * Attacking heroes by simply adding the enemy hero card to the list in NextBestAttackee seems to work but might be linked to a crash and thus I've commented it out for now.
+
 Notice
 ======
 A number of portions of the code are heavily inspired or outright taken from http://www.ownedcore.com/forums/mmo/hearthstone-heroes-of-warcraft/451310-finding-memory-values.html so please thank the posters there if you use this.
