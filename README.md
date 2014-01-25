@@ -33,3 +33,9 @@ Injector: patches Assembly-CSharp.dll to load Sigmund.dll (our loader)
 Sigmund: loader which watches filesystem and the game's dev console to trigger (re)loading plugins (after doing minor rewriting)
 
 TestPlugin: example plugin to automate playing against practice AI
+
+HearthstoneExtract: disassembled source from an older version of the game. Kept in the solution for easy searching (eg. find all references) but not always 100% correct. Use Reflector on the current Assembly-CSharp to double check.
+
+Notice
+======
+A number of portions of the code are heavily inspired or outright taken from http://www.ownedcore.com/forums/mmo/hearthstone-heroes-of-warcraft/451310-finding-memory-values.html so please thank the posters there if you use this.
