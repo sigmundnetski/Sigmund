@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injector", "Injector\Injector.csproj", "{13BD70D1-91EE-4B7D-891C-D9E235698274}"
+	ProjectSection(ProjectDependencies) = postProject
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E} = {007A96FA-BFF6-4622-BC76-D9D7BF4D066E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sigmund", "Sigmund\Sigmund.csproj", "{007A96FA-BFF6-4622-BC76-D9D7BF4D066E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{33BD1771-5E35-4700-8F4F-75303A9320C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E} = {007A96FA-BFF6-4622-BC76-D9D7BF4D066E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthstoneExtract", "HearthstoneExtract\HearthstoneExtract.csproj", "{0F226CCA-EF48-4C31-9D93-0AB93C87AB15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13BD70D1-91EE-4B7D-891C-D9E235698274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BD70D1-91EE-4B7D-891C-D9E235698274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BD70D1-91EE-4B7D-891C-D9E235698274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BD70D1-91EE-4B7D-891C-D9E235698274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007A96FA-BFF6-4622-BC76-D9D7BF4D066E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33BD1771-5E35-4700-8F4F-75303A9320C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33BD1771-5E35-4700-8F4F-75303A9320C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33BD1771-5E35-4700-8F4F-75303A9320C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33BD1771-5E35-4700-8F4F-75303A9320C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F226CCA-EF48-4C31-9D93-0AB93C87AB15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F226CCA-EF48-4C31-9D93-0AB93C87AB15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F226CCA-EF48-4C31-9D93-0AB93C87AB15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
