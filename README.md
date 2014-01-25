@@ -34,7 +34,7 @@ Sigmund: loader which watches filesystem and the game's dev console to trigger (
 
 TestPlugin: example plugin to automate playing against practice AI
 
-HearthstoneExtract: disassembled source from an older version of the game. Kept in the solution for easy searching (eg. find all references) but not always 100% correct. Use Reflector on the current Assembly-CSharp to double check.
+HearthstoneExtract: placeholder (you'll have to find it elsewhere) for disassembled source from an older version of the game. Kept in the solution for easy searching (eg. find all references) but not always 100% correct. Use Reflector on the current Assembly-CSharp to double check.
 
 Known Issues
 ============
