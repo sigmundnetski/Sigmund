@@ -69,15 +69,37 @@ namespace Plugin
             switch (curMode)
             {
                 case SceneMgr.Mode.HUB:
-                    SceneMgr.Get().SetNextMode(SceneMgr.Mode.PRACTICE);
+                    //SceneMgr.Get().SetNextMode(SceneMgr.Mode.PRACTICE);
+                    SceneMgr.Get().SetNextMode(SceneMgr.Mode.TOURNAMENT);
+                    break;
+                case SceneMgr.Mode.TOURNAMENT:
+                    if (!SceneMgr.Get().IsInGame() && !Network.IsMatching())
+                    {
+                        Log.say("Queuing for game against human");
+                        long myDeckId = DeckPickerTrayDisplay.Get().GetSelectedDeckID();
+
+                        GameMgr.Get().SetNextGame(GameMode.PLAY, MissionID.MULTIPLAYER_1v1);
+                        // ## For ranked ##
+                        //var what = Network.TrackWhat.TRACK_PLAY_TOURNAMENT_WITH_CUSTOM_DECK;
+                        //Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
+                        //Network.RankedMatch(myDeckId);
+
+                        // ## For unranked ##
+                        var what = Network.TrackWhat.TRACK_PLAY_CASUAL_WITH_CUSTOM_DECK;
+                        Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
+                        Network.UnrankedMatch(myDeckId);
+
+                        // set status
+                        PresenceMgr.Get().SetStatus(new Enum[] { PresenceStatus.PLAY_QUEUE });
+                        Log.log("    queued");
+                    }
                     break;
                 case SceneMgr.Mode.PRACTICE:
                     if (!SceneMgr.Get().IsInGame())
                     {
                         //TODO: make deck and mission id configurable
                         long myDeckId = DeckPickerTrayDisplay.Get().GetSelectedDeckID();
-                        var mission = MissionID.AI_NORMAL_MAGE;
-                        GameMgr.Get().StartGame(GameMode.PRACTICE, mission, myDeckId);
+                        GameMgr.Get().StartGame(GameMode.PRACTICE, MissionID.AI_NORMAL_MAGE, myDeckId);
                     }
                     break;
                 case SceneMgr.Mode.GAMEPLAY:
