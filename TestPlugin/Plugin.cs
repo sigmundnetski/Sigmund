@@ -89,8 +89,10 @@ namespace Plugin
                     }
                     else if (gs.IsGameOver())
                     {
-                        Network.EndGame();  // TODO: isn't this already taken care of by game over screen obj?
-                        SceneMgr.Get().SetNextMode(SceneMgr.Get().GetPrevMode());
+                        if (EndGameScreen.Get() != null)
+                        {
+                            EndGameScreen.Get().ContinueEvents();
+                        }
                     }
                     else if (gs.IsLocalPlayerTurn())
                     {
