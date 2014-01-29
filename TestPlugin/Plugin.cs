@@ -44,7 +44,7 @@ namespace Plugin
 
             try
             {
-                //Mainloop();
+                Mainloop();
             }
             catch (Exception ex)
             {
