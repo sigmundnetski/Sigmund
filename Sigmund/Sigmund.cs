@@ -24,7 +24,6 @@ namespace Sigmund
     public class Watchdog
     {
         static string pluginDirectory = @"C:\Users\Joseph\Documents\Visual Studio 2013\Projects\HearthstoneBot\plugins";
-        //static string scriptDir = @"C:\Users\Joseph\Documents\Visual Studio 2013\Projects\HearthstoneBot\scripts";
         Loader loader;
         Hashtable mtimeDb = new Hashtable();
         public void startWatch()
@@ -43,7 +42,7 @@ namespace Sigmund
             // If the user requests a plugin be run, reload it
             CheatMgr.Get().RegisterCheatHandler("run", new CheatMgr.ProcessCheatCallback(this.RunCommand));
 
-            // For testing
+            // Echo function, for testing
             CheatMgr.Get().RegisterCheatHandler("echo", new CheatMgr.ProcessCheatCallback(this.EchoCommand));
         }
         public bool RunPlugin(string pluginName)
@@ -58,6 +57,7 @@ namespace Sigmund
         }
         public bool EchoCommand(string func, string[] args, string rawArgs)
         {
+            Log.say(rawArgs);
             return true;
         }
         public void onChange_raw(object sender, FileSystemEventArgs e)
@@ -79,67 +79,31 @@ namespace Sigmund
     }
     public class Loader
     {
-        public Hashtable pluginDb = new Hashtable(); // assembly path -> thread
-        public Hashtable tempDb = new Hashtable(); // thread -> temp file
-
-        public Thread exec(string path) // creates shadow copy
+        public void exec(string path) // creates shadow copy
         {
             Log.log("Loader.exec called for " + path);
             string tempPath = System.IO.Path.GetTempFileName();
 
-            //System.IO.File.Copy(path, tempPath, true);
-
+            // rewrite name to let us load a different version of the same library
             var ad = Mono.Cecil.AssemblyDefinition.ReadAssembly(path);
             var name = ad.Name.Name;
             ad.Name.Name = name + "_" + Path.GetFileName(tempPath);
             ad.MainModule.Name = name + "_" + Path.GetFileName(tempPath);
             ad.Write(tempPath);
 
-            //var t = execAssembly(tempPath);
+            // load assembly and run the init
             var a = Assembly.LoadFile(tempPath);
-            var t = runAssembly( a, name );
-            tempDb[t] = tempPath;
-            return t;
+            runAssembly( a, name );
         }
-        /*
-        public Thread execAssembly(string path)
-        {
-            Log.debug("Loader.execAssembly " + path);
-            var a = Assembly.LoadFile(path);
-            return runAssembly(a);
-        }*/
-        public Thread runAssembly(Assembly a, string trueName)
-        {
-            if (pluginDb.ContainsKey(trueName))
-            {
-                Thread oldThread = (Thread)pluginDb[trueName];
-                Log.debug("Killing old thread for assembly: " + trueName);
-                oldThread.Abort();
-                Thread.Sleep(1000);
-            }
 
-            var t = new Thread(() => runAssembly_worker(a));
-            pluginDb[trueName] = t;
-            t.Start();
-            Log.debug("Loader.runAssembly started new thread for " + a.FullName);
-            return t;
-        }
-        public static void runAssembly_worker(Assembly a)
+        public void runAssembly(Assembly a, string trueName)
         {
-            //var t = a.GetType("Plugin.Plugin");
-            //var c = Activator.CreateInstance(t);
-            //t.InvokeMember("init", BindingFlags.InvokeMethod, null, c, new object[] { });
-            foreach (var t in a.GetExportedTypes())
-            {
-                var c = Activator.CreateInstance(t);
-                t.InvokeMember("init", BindingFlags.InvokeMethod, null, c, new object[] { });
-                // method 2
-                //dynamic c = Activator.CreateInstance(t);
-                //c.init();
-            }
+            var t = a.GetType("Plugin.Plugin");
+            var c = Activator.CreateInstance(t);
+            t.InvokeMember("init", BindingFlags.InvokeMethod, null, c, new object[] { });
+            Log.debug("Loader.runAssembly ran Plugin.Plugin.init for " + trueName);
         }
     }
-
     public class Log
     {
         public static void debug(string msg)
