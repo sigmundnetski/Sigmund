@@ -11,7 +11,7 @@ namespace Plugin
     public class Plugin : MonoBehaviour
     {
         float timeLastRun;
-        bool requestedNewGame;
+        
         public static void init()
         {
             var go = SceneMgr.Get().gameObject; // attach to SceneMgr since it always exists
@@ -28,18 +28,17 @@ namespace Plugin
             go.AddComponent<Plugin>();
         }
 
-        public void Awake()     // This is called after loading the DLL before the loader gives back control to Unity
+        public void Awake()     // This is called after loading the DLL, before the loader gives back control to Unity
         {
         }
         public void Start()     // This is called after control is given back to Unity
         {
             timeLastRun = Time.realtimeSinceStartup;
-            requestedNewGame = false;
         }
         public void Update()    // This is called every frame from Unity's main thread
         {
-            // Slow us down to 1 run per 2 seconds
-            if (Time.realtimeSinceStartup - timeLastRun < 5) { return; }
+            // Wait a few seconds between runs
+            if (Time.realtimeSinceStartup - timeLastRun < 3) { return; }
             timeLastRun = Time.realtimeSinceStartup;
 
             try
@@ -52,14 +51,14 @@ namespace Plugin
             }
         }
 
-
         GameState gs;
         Player myPlayer;
         Player ePlayer;
+
+        List<Card> cardsAlreadyDropped;
+        List<Card> cardsAlreadyAttacked;
         public void Init_Game()
         {
-            requestedNewGame = false;
-
             gs = GameState.Get();
             myPlayer = gs.GetLocalPlayer();
             ePlayer = gs.GetFirstOpponentPlayer(myPlayer);
@@ -67,44 +66,37 @@ namespace Plugin
         public void Mainloop()
         {
             var curMode = SceneMgr.Get().GetMode();
+
             switch (curMode)
             {
                 case SceneMgr.Mode.HUB:
-                    Log.log("In hub, switching to practice scene");
                     SceneMgr.Get().SetNextMode(SceneMgr.Mode.PRACTICE);
                     break;
                 case SceneMgr.Mode.PRACTICE:
-                    if (!requestedNewGame)
+                    if (!SceneMgr.Get().IsInGame())
                     {
-                        Log.log("In practice, starting game");
                         //TODO: make deck and mission id configurable
                         long myDeckId = DeckPickerTrayDisplay.Get().GetSelectedDeckID();
                         var mission = MissionID.AI_NORMAL_MAGE;
                         GameMgr.Get().StartGame(GameMode.PRACTICE, mission, myDeckId);
-                        requestedNewGame = true;
                     }
                     break;
                 case SceneMgr.Mode.GAMEPLAY:
-                    Log.log("In game, playing");
                     Init_Game();
                     if (gs.IsMulliganPhase())
                     {
-                        Log.say("Mulligan phase");
                         DoMulligan();
-                    }
-                    else if (gs.IsLocalPlayerTurn())
-                    {
-                        // should we wait until also gs.IsMainPhase() ?
-                        Log.say("Our turn");
-                        BruteHand();    // drops minions until out of mana
-                        BruteAttack();  // attacks enemies with minions randomly
-                        DoEndTurn();
                     }
                     else if (gs.IsGameOver())
                     {
-                        Log.say("Game over");
                         Network.EndGame();  // TODO: isn't this already taken care of by game over screen obj?
                         SceneMgr.Get().SetNextMode(SceneMgr.Get().GetPrevMode());
+                    }
+                    else if (gs.IsLocalPlayerTurn())
+                    {
+                        BruteHand();    // drops minions until out of mana
+                        BruteAttack();  // attacks enemies with minions randomly
+                        DoEndTurn();
                     }
                     else
                     {
@@ -115,32 +107,34 @@ namespace Plugin
         }
         public void DoMulligan()
         {
-            Log.log("Handling mulligan");
             InputManager.Get().DoEndTurnButton();
             TurnStartManager.Get().BeginListeningForTurnEvents();
             MulliganManager.Get().EndMulliganEarly();
-            Log.log("Done handling mulligan");
         }
         public void DoEndTurn()
         {
-            Log.log("Ending turn");
+            // TODO: try removing this in the future. for now, clear these to free up refs in case unity requires being able to GC them right away
+            cardsAlreadyDropped.Clear();
+            cardsAlreadyAttacked.Clear();
+
             InputManager im = InputManager.Get();
             im.DoEndTurnButton();
-            Log.log("Done ending turn");
         }
         public void BruteHand()
         {
+            cardsAlreadyDropped = new List<Card>();
+
             int numCardsPlayed = 0;
             for (int i = 0; i < myPlayer.GetHandZone().GetCards().Count + 10; i++) // count is temp hack
             {
                 var drop = NextBestMinionDrop();
                 if (drop == null)
                 {
-                    Log.log("Played " + numCardsPlayed + " cards from hand");
                     return;
                 }
                 if (DoDropMinion(drop))
                 {
+                    cardsAlreadyDropped.Add(drop);
                     numCardsPlayed += 1;
                 }
             }
@@ -151,6 +145,8 @@ namespace Plugin
             var myCards = myPlayer.GetHandZone().GetCards();
             foreach (Card c in myCards)
             {
+                if (cardsAlreadyDropped.Contains(c)) { continue; }
+
                 var e = c.GetEntity();
 
                 // skip if not the right type, mana cost, etc
@@ -164,6 +160,8 @@ namespace Plugin
         }
         public void BruteAttack()
         {
+            cardsAlreadyAttacked = new List<Card>();
+
             int numAttacks = 0;
             for (int i = 0; i < myPlayer.GetBattlefieldZone().GetCards().Count + 10; i++) // count is temp hack
             {
@@ -171,11 +169,11 @@ namespace Plugin
                 var attackee = NextBestAttackee(); // TODO can't be null in theory, but keep check in anyways for now
                 if (attacker == null || attackee == null)
                 {
-                    Log.log("Did " + numAttacks + " attacks");
                     return;
                 }
                 if (DoAttack(attacker, attackee))
                 {
+                    cardsAlreadyAttacked.Add(attacker);
                     numAttacks += 1;
                 }
             }
@@ -187,6 +185,8 @@ namespace Plugin
             var myCards = myPlayer.GetBattlefieldZone().GetCards();
             foreach (Card c in myCards)
             {
+                if (cardsAlreadyAttacked.Contains(c)) { continue; }
+
                 var e = c.GetEntity();
 
                 // skip if can't attack at all
@@ -254,23 +254,20 @@ namespace Plugin
                 myPlayer.GetBattlefieldZone().UnHighlightBattlefield();
 
                 Log.log("    DoAttack: noted card grab. doing net response");
-                Log.log("    Response mode: " + gs.GetResponseMode().ToString());
+                Log.log("    Response mode pre: " + gs.GetResponseMode().ToString());
                 if (InputManager.Get().DoNetworkResponse(attacker.GetEntity()))
                 {
-                    Log.log("    Response mode: " + gs.GetResponseMode().ToString());
-                    Log.log("    DoAttack: did outer DoNetworkReponse");
+                    Log.log("    Response mode post: " + gs.GetResponseMode().ToString());
                     EnemyActionHandler.Get().NotifyOpponentOfCardPickedUp(attacker);
 
-                    Log.log("    DoAttack: notified opponent of card picked up");
                     // attack with picked up minion
                     EnemyActionHandler.Get().NotifyOpponentOfTargetModeBegin(attacker);
                     gs.GetGameEntity().NotifyOfBattlefieldCardClicked(attackee.GetEntity(), true);
                     myPlayer.GetBattlefieldZone().UnHighlightBattlefield();
-                    Log.log("    Response mode: " + gs.GetResponseMode().ToString());
+                    Log.log("    Response mode pre: " + gs.GetResponseMode().ToString());
                     if (InputManager.Get().DoNetworkResponse(attackee.GetEntity()))
                     {
-                        Log.log("    Response mode: " + gs.GetResponseMode().ToString());
-                        Log.log("    DoAttack did inner network response");
+                        Log.log("    Response mode post: " + gs.GetResponseMode().ToString());
                         EnemyActionHandler.Get().NotifyOpponentOfTargetEnd();
 
                         myPlayer.GetHandZone().UpdateLayout(-1, true);
@@ -336,12 +333,10 @@ namespace Plugin
                 destZone.UnHighlightBattlefield();
 
                 gs.SetSelectedOptionPosition(slot);
-                Log.log("    DoDropMinion: set position");
-                Log.log("    Response mode: " + gs.GetResponseMode().ToString());
+                Log.log("    Response mode pre: " + gs.GetResponseMode().ToString());
                 if (InputManager.Get().DoNetworkResponse(c.GetEntity()))
                 {
-                    Log.log("    Response mode: " + gs.GetResponseMode().ToString());
-                    Log.log("    DoDropMinion: did DoNetworkResponse");
+                    Log.log("    Response mode post: " + gs.GetResponseMode().ToString());
                     // Update local ui
                     int zonePos = c.GetEntity().GetZonePosition();
                     ZoneMgr.Get().AddLocalZoneChange(c, destZone, slot);
@@ -382,7 +377,7 @@ namespace Plugin
                 {
                     EnemyActionHandler.Get().NotifyOpponentOfCardDropped();
                 }
-                Log.log("    DoDropMinion exiting sucessfully?");
+                Log.log("    DoDropMinion exiting");
                 return true;
             }
             catch (Exception ex)
