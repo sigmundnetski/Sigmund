@@ -34,6 +34,7 @@ namespace Plugin
         public void Start()     // This is called after control is given back to Unity
         {
             timeLastRun = Time.realtimeSinceStartup;
+            Log.say("Plugin started");
         }
         public void Update()    // This is called every frame from Unity's main thread
         {
@@ -43,7 +44,7 @@ namespace Plugin
 
             try
             {
-                Mainloop();
+                //Mainloop();
             }
             catch (Exception ex)
             {
@@ -55,8 +56,6 @@ namespace Plugin
         Player myPlayer;
         Player ePlayer;
 
-        List<Card> cardsAlreadyDropped;
-        List<Card> cardsAlreadyAttacked;
         public void Init_Game()
         {
             gs = GameState.Get();
@@ -96,8 +95,14 @@ namespace Plugin
                     }
                     else if (gs.IsLocalPlayerTurn())
                     {
-                        BruteHand();    // drops minions until out of mana
-                        BruteAttack();  // attacks enemies with minions randomly
+                        bool stop = false;      // flag if we should stop at this step (and cont. next tick) instead of moving on
+
+                        stop = BruteHand();     // drops minions until out of mana
+                        if (stop) { return; }
+
+                        stop = BruteAttack();   // attacks enemies with minions randomly
+                        if (stop) { return; }
+
                         DoEndTurn();
                     }
                     else
@@ -115,40 +120,27 @@ namespace Plugin
         }
         public void DoEndTurn()
         {
-            // TODO: try removing this in the future. for now, clear these to free up refs in case unity requires being able to GC them right away
-            cardsAlreadyDropped.Clear();
-            cardsAlreadyAttacked.Clear();
-
             InputManager im = InputManager.Get();
             im.DoEndTurnButton();
         }
-        public void BruteHand()
+        public bool BruteHand()
         {
-            cardsAlreadyDropped = new List<Card>();
-
-            int numCardsPlayed = 0;
-            for (int i = 0; i < myPlayer.GetHandZone().GetCards().Count + 10; i++) // count is temp hack
+            var drop = NextBestMinionDrop();
+            if (drop == null)
             {
-                var drop = NextBestMinionDrop();
-                if (drop == null)
-                {
-                    return;
-                }
-                if (DoDropMinion(drop))
-                {
-                    cardsAlreadyDropped.Add(drop);
-                    numCardsPlayed += 1;
-                }
+                return false;   // no more minions to drop => continue to attacking phase
             }
-            Log.log("BruteHand shouldn't be here");
+            if (DoDropMinion(drop))
+            {
+                return true;    // successfully dropped minion. stop here and continue next frame
+            }
+            return true;       // had a minion to drop but failed to play it. try again next frame
         }
         public Card NextBestMinionDrop()
         {
             var myCards = myPlayer.GetHandZone().GetCards();
             foreach (Card c in myCards)
             {
-                if (cardsAlreadyDropped.Contains(c)) { continue; }
-
                 var e = c.GetEntity();
 
                 // skip if not the right type, mana cost, etc
@@ -160,26 +152,19 @@ namespace Plugin
             }
             return null;
         }
-        public void BruteAttack()
+        public bool BruteAttack()
         {
-            cardsAlreadyAttacked = new List<Card>();
-
-            int numAttacks = 0;
-            for (int i = 0; i < myPlayer.GetBattlefieldZone().GetCards().Count + 10; i++) // count is temp hack
+            var attacker = NextBestAttacker();
+            var attackee = NextBestAttackee(); // in theory could be null if enemy hero was somehow invulnerable
+            if (attacker == null || attackee == null)
             {
-                var attacker = NextBestAttacker();
-                var attackee = NextBestAttackee(); // TODO can't be null in theory, but keep check in anyways for now
-                if (attacker == null || attackee == null)
-                {
-                    return;
-                }
-                if (DoAttack(attacker, attackee))
-                {
-                    cardsAlreadyAttacked.Add(attacker);
-                    numAttacks += 1;
-                }
+                return false;
             }
-            Log.log("BruteAttack shouldn't be here");
+            if (DoAttack(attacker, attackee))
+            {
+                return true;    // successful attack. stop here and continue next frame
+            }
+            return true;        // failed to execute attack. try again next frame
         }
         public Card NextBestAttacker()
         {
@@ -187,8 +172,6 @@ namespace Plugin
             var myCards = myPlayer.GetBattlefieldZone().GetCards();
             foreach (Card c in myCards)
             {
-                if (cardsAlreadyAttacked.Contains(c)) { continue; }
-
                 var e = c.GetEntity();
 
                 // skip if can't attack at all
