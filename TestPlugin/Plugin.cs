@@ -10,8 +10,10 @@ namespace Plugin
 {
     public class Plugin : MonoBehaviour
     {
+        static float minTimeBetweenRuns = 3;
         float timeLastRun;
-        
+        System.Random rng;
+
         public static void init()
         {
             var go = SceneMgr.Get().gameObject; // attach to SceneMgr since it always exists
@@ -27,19 +29,13 @@ namespace Plugin
 
             go.AddComponent<Plugin>();
         }
-
         public void Awake()     // This is called after loading the DLL, before the loader gives back control to Unity
         {
-        }
-        public void Start()     // This is called after control is given back to Unity
-        {
-            timeLastRun = Time.realtimeSinceStartup;
-            Log.say("Plugin started");
         }
         public void Update()    // This is called every frame from Unity's main thread
         {
             // Wait a few seconds between runs
-            if (Time.realtimeSinceStartup - timeLastRun < 3) { return; }
+            if (Time.realtimeSinceStartup - timeLastRun < minTimeBetweenRuns) { return; }
             timeLastRun = Time.realtimeSinceStartup;
 
             try
@@ -51,16 +47,29 @@ namespace Plugin
                 Log.log(ex.StackTrace.ToString());
             }
         }
+        public void Start()     // This is called after control is given back to Unity
+        {
+            rng = new System.Random();
+            timeLastRun = Time.realtimeSinceStartup;
+            timeLastQueued = Time.realtimeSinceStartup;
+            Log.log("Plugin started");
+        }
 
         GameState gs;
         Player myPlayer;
         Player ePlayer;
+        float timeLastQueued;
+        static float maxQueueTime = 60 * 3;
+        static bool playVsHumans = true;
+        static bool playRanked = false;
 
         public void Init_Game()
         {
             gs = GameState.Get();
             myPlayer = gs.GetLocalPlayer();
             ePlayer = gs.GetFirstOpponentPlayer(myPlayer);
+
+            InactivePlayerKicker.Get().SetShouldCheckForInactivity(false); // prevent getting kicked for being idle
         }
         public void Mainloop()
         {
@@ -68,30 +77,56 @@ namespace Plugin
 
             switch (curMode)
             {
+                case SceneMgr.Mode.LOGIN:
+                    if (WelcomeQuests.Get() != null)
+                    {
+                        Log.say("Clicking through welcome quest");
+                        WelcomeQuests.Get().m_clickCatcher.TriggerRelease();
+                    }
+                    break;
                 case SceneMgr.Mode.HUB:
-                    //SceneMgr.Get().SetNextMode(SceneMgr.Mode.PRACTICE);
-                    SceneMgr.Get().SetNextMode(SceneMgr.Mode.TOURNAMENT);
+                    if (playVsHumans)
+                    {
+                        SceneMgr.Get().SetNextMode(SceneMgr.Mode.TOURNAMENT);
+                    }
+                    else
+                    {
+                        SceneMgr.Get().SetNextMode(SceneMgr.Mode.PRACTICE);
+                    }
                     break;
                 case SceneMgr.Mode.TOURNAMENT:
-                    if (!SceneMgr.Get().IsInGame() && !Network.IsMatching())
+                    var timeSinceQueued = Time.realtimeSinceStartup - timeLastQueued;
+                    // We want to wait if we're in queue or the game has started but we haven't changed scene yet
+                    // However, IsMatching() falsely reports true after returning here after a game, so we add a timeout
+                    if (!SceneMgr.Get().IsInGame() && !Network.IsMatching() || timeSinceQueued > maxQueueTime)
                     {
                         Log.say("Queuing for game against human");
                         long myDeckId = DeckPickerTrayDisplay.Get().GetSelectedDeckID();
 
+                        // queue
                         GameMgr.Get().SetNextGame(GameMode.PLAY, MissionID.MULTIPLAYER_1v1);
-                        // ## For ranked ##
-                        //var what = Network.TrackWhat.TRACK_PLAY_TOURNAMENT_WITH_CUSTOM_DECK;
-                        //Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
-                        //Network.RankedMatch(myDeckId);
-
-                        // ## For unranked ##
-                        var what = Network.TrackWhat.TRACK_PLAY_CASUAL_WITH_CUSTOM_DECK;
-                        Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
-                        Network.UnrankedMatch(myDeckId);
+                        if (playRanked)
+                        {
+                            var what = Network.TrackWhat.TRACK_PLAY_TOURNAMENT_WITH_CUSTOM_DECK;
+                            Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
+                            Network.RankedMatch(myDeckId);
+                        }
+                        else
+                        {
+                            var what = Network.TrackWhat.TRACK_PLAY_CASUAL_WITH_CUSTOM_DECK;
+                            Network.TrackClient(Network.TrackLevel.LEVEL_INFO, what);
+                            Network.UnrankedMatch(myDeckId);
+                        }
+                        timeLastQueued = Time.realtimeSinceStartup;
 
                         // set status
+                        FriendChallengeMgr.Get().OnEnteredMatchmakerQueue();
                         PresenceMgr.Get().SetStatus(new Enum[] { PresenceStatus.PLAY_QUEUE });
                         Log.log("    queued");
+                    }
+                    else
+                    {
+                        Log.say("In tournament mode and in queue or launching game. Time since queued: " + timeSinceQueued);
                     }
                     break;
                 case SceneMgr.Mode.PRACTICE:
@@ -112,6 +147,7 @@ namespace Plugin
                     {
                         if (EndGameScreen.Get() != null)
                         {
+                            Log.say("Game over");
                             EndGameScreen.Get().ContinueEvents();
                         }
                     }
@@ -131,6 +167,9 @@ namespace Plugin
                     {
                         //Log.log("Unimplemented game state");
                     }
+                    break;
+                default:
+                    Log.say("Mainloop failed over to default. Mode: " + curMode.ToString());
                     break;
             }
         }
@@ -154,13 +193,21 @@ namespace Plugin
             }
             if (DoDropMinion(drop))
             {
-                return true;    // successfully dropped minion. stop here and continue next frame
+                return true;    // successfully dropped minion. stop here and continue next update
             }
-            return true;       // had a minion to drop but failed to play it. try again next frame
+            return true;       // had a minion to drop but failed to play it. try again next update
         }
         public Card NextBestMinionDrop()
         {
-            var myCards = myPlayer.GetHandZone().GetCards();
+            var myCards = myPlayer.GetHandZone().GetCards().ToList();
+
+            // can't get any more minions if too many on the board
+            if (myPlayer.GetBattlefieldZone().GetCardCount() > 7)
+            {
+                return null;
+            }
+
+            // get first valid minion we can afford
             foreach (Card c in myCards)
             {
                 var e = c.GetEntity();
@@ -184,14 +231,15 @@ namespace Plugin
             }
             if (DoAttack(attacker, attackee))
             {
-                return true;    // successful attack. stop here and continue next frame
+                return true;        // successful attack. stop here and continue next update
             }
-            return true;        // failed to execute attack. try again next frame
+            return true;            // failed to execute attack. try again next update
         }
         public Card NextBestAttacker()
         {
             //TODO: consider weapons, hero, hero power
-            var myCards = myPlayer.GetBattlefieldZone().GetCards();
+            var myCards = myPlayer.GetBattlefieldZone().GetCards().ToList(); //.OrderBy(item => rng.Next());
+
             foreach (Card c in myCards)
             {
                 var e = c.GetEntity();
@@ -229,7 +277,7 @@ namespace Plugin
                 var e = c.GetEntity();
 
                 // skip if somehow immune to being attacked
-                if (!e.CanBeAttacked())
+                if (!e.CanBeAttacked() || e.IsStealthed())
                 {
                     continue;
                 }
@@ -364,6 +412,7 @@ namespace Plugin
                 {
                     Log.log("    DropMinion DoNetworkReponse failed, unsetting position");
                     gs.SetSelectedOptionPosition(Network.NoPosition);
+                    return false;
                 }
 
                 // update layout

@@ -14,7 +14,7 @@ namespace Injector
         static string injPath = @"C:\Users\Joseph\Documents\Visual Studio 2013\Projects\HearthstoneBot\ext\Sigmund.dll";
         static string appPatchedPath = @"C:\Users\Joseph\Documents\Visual Studio 2013\Projects\HearthstoneBot\ext\Assembly-CSharp.dll";
 
-        static string appTypeName = "Hub";
+        static string appTypeName = "SceneMgr";
         static string appMethodName = "Start";
         static string injTypeName = "Main";
         static string injMethodName = "Start";
