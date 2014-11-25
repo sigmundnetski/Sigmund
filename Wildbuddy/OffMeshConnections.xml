@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+These are the flags, area types, and directions supported by off mesh connections. You do NOT need to use the values. They are just copy/paste.
+
+
+	[Flags]
+	public enum AbilityFlags : ushort
+	{
+		None = 0x0,
+		Walk = 0x1,
+		Jump = 0x2,
+		DoubleJump = 0x4,
+
+		All = 0xFFFF,
+	}
+	public enum DirectionFlags
+	{
+		StartToEnd,
+		Bidirectional
+	}
+	public enum AreaType : byte
+	{
+		None = 0,
+		Ground = 1,
+		Road = 2,
+
+		Elevator = 3,
+		Fall = 4,
+		Water = 5,
+		Teleport = 6,
+		Portal = 7,
+	}
+
+-->
+
+<!--For the screenshot links, add   'm'  to the image name to see a map of the spot.
+	ex: EverstartGrove_1.png  ->  EverstarGrove_1m.png 
+	Some cave/ship maps don't have maps.-->
+
+<OffMeshConnections>
+  <!-- Exile -->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between ledge #1" MapId="1537" StartX="-300.1494" StartY="7.394565" StartZ="-28.11529" EndX="-299.6753" EndY="7.73199224" EndZ="-35.20765" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_1.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between ledge #2" MapId="1537" StartX="-287.677429" StartY="7.96600771" StartZ="-59.77407" EndX="-288.081482" EndY="7.282165" EndZ="-66.9976959" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_2.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between ledge #3" MapId="1537" StartX="-275.369751" StartY="7.392529" StartZ="-79.89398" EndX="-267.331177" EndY="8.025127" EndZ="-79.9761" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_3.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between ledge #4" MapId="1537" StartX="-243.9076" StartY="8.08301" StartZ="-78.9543839" EndX="-236.1249" EndY="7.28299856" EndZ="-78.79769" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_4.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between ledge #5" MapId="1537" StartX="-224.37146" StartY="7.392405" StartZ="-66.0933" EndX="-224.380386" EndY="8.045967" EndZ="-58.6072769" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_5.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between hanging-ledge #1" MapId="1537" StartX="-228.677811" StartY="8.065067" StartZ="-47.65381" EndX="-236.21756" EndY="9.983775" EndZ="-48.8416824" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_6.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Jump between hanging-ledge #2" MapId="1537" StartX="-243.97966" StartY="10.9139462" StartZ="-47.5157051" EndX="-250.766937" EndY="12.1805983" EndZ="-46.9260979" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_6.png-->
+  <Connection Name="[The Gambler's Ruin, Relic Room] Walk off hanging-ledge #3" MapId="1537" Star7X="-251.036728" StartY="12.1838341" StartZ="-46.4128227" EndX="-257.508484" EndY="-2.219295" EndZ="-35.070137" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/TheGamblersRuin_7.png-->
+
+  <Connection Name="[Everstar Grove, east of Elderoot Refuge] - Jump from ledge near Victor Lazarin" MapId="990" Radius="0.4" Direction="StartToEnd" AreaType="Fall" AbilityFlags="Walk" StartX="-395.3399" StartY="-893.1099" StartZ="-3266.747" EndX="-382.4295" EndY="-911.4561" EndZ="-3264.192" />
+  <!-- enu.li/exile/EverstarGrove_1.png -->
+  <Connection Name="[Everstar Grove, Blighted Glen Cave Entrance] - Walk through entrance" MapId="990" Radius="0.4" Direction="Bidirectional" AreaType="Ground" AbilityFlags="Walk"  StartX="-614.5834" StartY="-974.3229" StartZ="-3781.98" EndX="-581.7152" EndY="-979.3655" EndZ="-3756.898" />
+  <!-- enu.li/exile/EverstarGrove_2.png -->
+  <Connection Name="[Everstar Grove, Everstar Passage] - Walk through entrance" MapId="990" StartX="662.9302" StartY="-939.052246" StartZ="-3354.479" EndX="673.5519" EndY="-941.079163" EndZ="-3332.51758" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/EverstarGrove_3.png -->
+
+  <Connection Name="[Celestion, Greenbough Glen] Leave cave" MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_1.png -->
+  <Connection Name="[Celestion, Emberwood] Walk into tree cave #1" MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_2.png -->
+  <Connection Name="[Celestion, Emberwood] Walk into tree cave #2" MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- Missing screenshot -->
+  <Connection Name="[Celestion, Emberwood] Walk into tree cave #3" MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_3.png -->
+  <Connection Name="[Celestion, Greenbough Glen] Jump up on small rock to quest giver" MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Jump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_4.png -->
+  <Connection Name="[Celestion, Celestial Falls] Go to altar in water." MapId="51" StartX="0.0135712391" StartY="0" StartZ="0" EndX="0.0135712391" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_5.png -->
+  <!-- 6 and 7 missing? Check screenshots -->
+  <Connection Name="[Celestion, Darkloam Hollow] Walk down to skull." MapId="51" StartX="1803.89832" StartY="-945.7986" StartZ="-2282.35352" EndX="1822.50562" EndY="-960.6229" EndZ="-2261.25366" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_8.png -->
+  <Connection Name="[Celestion, Darkloam Hollow] Walk off of skull." MapId="51" StartX="1828.99524" StartY="-961.106934" StartZ="-2262.49219" EndX="1862.80469" EndY="-978.096863" EndZ="-2268.44971" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_9.png -->
+  <Connection Name="[Celestion, Sylvan Glade] Jump up/down path to cave #1" MapId="51" StartX="2669.29028" StartY="-951.136047" StartZ="-2284.79175" EndX="2674.34839" EndY="-945.986633" EndZ="-2289.75928" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <Connection Name="[Celestion, Sylvan Glade] Jump up/down path to cave #2" MapId="51" StartX="2674.84985" StartY="-945.9145" StartZ="-2289.78052" EndX="2676.53418" EndY="-941.364746" EndZ="-2296.612" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_10.png -->
+  <Connection Name="[Celestion, Sylvan Glade] Jump up/down path to cave #3" MapId="51" StartX="2676.77734" StartY="-941.122253" StartZ="-2297.192" EndX="2683.297" EndY="-939.0743" EndZ="-2294.73413" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_10.png -->
+  <Connection Name="[Celestion, Sylvan Glade] Jump up/down path to cave #4" MapId="51" StartX="2683.34058" StartY="-938.237366" StartZ="-2292.7373" EndX="2687.30957" EndY="-934.5234" EndZ="-2299.09619" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_10.png -->
+  <Connection Name="[Celestion, Elder Wisdom Tree] Jump up on rock where quest-giver is (south side)" MapId="51" StartX="2812.525" StartY="-884.636536" StartZ="-2492.252" EndX="2814.76" EndY="-881.82666" EndZ="-2498.3186" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_11.png -->
+  <Connection Name="[Celestion, Elder Wisdom Tree] Jump up on rock where quest-giver is (north side)" MapId="51" StartX="2813.64453" StartY="-881.537" StartZ="-2500.43115" EndX="2814.70483" EndY="-881.2467" EndZ="-2502.84131" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_11.png -->
+  <Connection Name="[Celestion, Explorers Union Headquarters] Jump up on shelf where collect object is." MapId="51" StartX="2711.01465" StartY="-928.9448" StartZ="-2533.72437" EndX="2714.999" EndY="-925.995056" EndZ="-2533.09619" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_12.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump back on walkway." MapId="51" StartX="2792.58618" StartY="-993.582947" StartZ="-1709.32117" EndX="2797.25854" EndY="-987.5279" EndZ="-1706.08289" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_13.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump on green platform" MapId="51" StartX="3209.02271" StartY="-921.487549" StartZ="-1741.22119" EndX="3204.40283" EndY="-917.328857" EndZ="-1739.75964" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_14.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump off green platform" MapId="51" StartX="3191.03271" StartY="-909.8509" StartZ="-1728.78516" EndX="3184.971" EndY="-906.4182" EndZ="-1727.22742" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_14.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump onto tree root." MapId="51" StartX="3182.93359" StartY="-905.712646" StartZ="-1717.857" EndX="3186.826" EndY="-903.1671" EndZ="-1709.01733" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_15.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump onto green platform. #2" MapId="51" StartX="3217.18164" StartY="-890.7808" StartZ="-1707.11267" EndX="3224.65186" EndY="-892.015259" EndZ="-1697.7793" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_16.png -->
+  <Connection Name="[Celestion, Exo-Site N22] Jump off green platform. #2" MapId="51" StartX="3235.02466" StartY="-888.3323" StartZ="-1679.29944" EndX="3234.54688" EndY="-890.4484" EndZ="-1668.22339" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_16.png -->
+  <Connection Name="[Celestion, Junction Zeta] Walk down rocks to get to questing area #0" MapId="51" StartX="3230.29028" StartY="-943.417" StartZ="-2072.763" EndX="3225.00073" EndY="-962.6553" EndZ="-2058.36035" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_17.png -->
+  <Connection Name="[Celestion, Junction Zeta] Go up rock to leave questing area #1" MapId="51" StartX="3206.37036" StartY="-961.6099" StartZ="-2057.083" EndX="3208.22241" EndY="-956.934448" EndZ="-2061.4187" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_17.png -->
+  <Connection Name="[Celestion, Junction Zeta] Go up rock to leave questing area #2" MapId="51" StartX="3212.0603" StartY="-951.072937" StartZ="-2072.588" EndX="3217.638" EndY="-947.3427" EndZ="-2071.58472" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_17.png -->
+  <Connection Name="[Celestion, Junction Zeta] Go up rock to leave questing area #3" MapId="51" StartX="3218.494" StartY="-947.33075" StartZ="-2070.99829" EndX="3226.17773" EndY="-943.731934" EndZ="-2076.581" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_17.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up lower rocks #1" MapId="51" StartX="1998.62061" StartY="-851.7907" StartZ="-3268.59619" EndX="1992.64636" EndY="-847.5744" EndZ="-3267.72729" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_18.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up lower rocks #2" MapId="51" StartX="1992.438" StartY="-847.670837" StartZ="-3267.67749" EndX="1986.44836" EndY="-845.74115" EndZ="-3269.07446" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_18.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up lower rocks #3" MapId="51" StartX="1985.60107" StartY="-845.7601" StartZ="-3268.89551" EndX="1972.61938" EndY="-833.050537" EndZ="-3290.67773" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_18.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up lower rocks #4" MapId="51" StartX="1972.61853" StartY="-833.050354" StartZ="-3290.67944" EndX="1967.97388" EndY="-827.4342" EndZ="-3298.7207" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_18.png -->
+
+  <Connection Name="[Celestion, Horizon Plateau] Jump up upper rocks #1" MapId="51" StartX="1926.94739" StartY="-797.598938" StartZ="-3338.38525" EndX="1931.58374" EndY="-795.166748" EndZ="-3341.35425" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_19.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up upper rocks #2" MapId="51" StartX="1934.307" StartY="-795.3126" StartZ="-3342.287" EndX="1929.1" EndY="-791.5661" EndZ="-3346.6604" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_19.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up upper rocks #3" MapId="51" StartX="1926.91321" StartY="-790.197" StartZ="-3346.16577" EndX="1929.698" EndY="-785.496948" EndZ="-3351.24658" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_19.png -->
+  <Connection Name="[Celestion, Horizon Plateau] Jump up upper rocks #4" MapId="51" StartX="1930.46777" StartY="-784.9024" StartZ="-3351.72339" EndX="1927.53442" EndY="-780.6143" EndZ="-3355.14063" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_19.png -->
+  <Connection Name="[Celestion, The Vibrant Ascent] Go up water spout." MapId="51" StartX="2251.01172" StartY="-923.209961" StartZ="-3042.90625" EndX="2280.49829" EndY="-859.0655" EndZ="-3091.24341" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/exile/Celestion_20.png  Bot doesn't seem to use this? -->
+
+
+
+
+
+  <!-- END Exile -->
+
+  <!-- Dominion -->
+  <Connection Name="[The Desnity, Imperial Museum] Jump on glass cube" MapId="1634" StartX="-307.717651" StartY="6.61369228" StartZ="-26.8377571" EndX="-307.7988" EndY="6.39360332" EndZ="-35.5415649" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/TheDestiny_1.png -->
+  <Connection Name="[The Desnity, Imperial Museum] Jump off glass cube" MapId="1634" StartX="-287.485229" StartY="6.3954463" StartZ="-45.66362" EndX="-287.145752" EndY="6.680141" EndZ="-53.823513" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/TheDestiny_2.png -->
+  <Connection Name="[The Desnity, Imperial Museum] Shortcut jump off ledge" MapId="1634" StartX="-241.395386" StartY="6.702359" StartZ="-66.13831" EndX="-244.154938" EndY="-1.871095" EndZ="-57.31337" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/TheDestiny_3.png -->
+
+  <Connection Name="[Levian Bay, Stalker's Den] Jump up layered rocks #1" MapId="1387" StartX="-3261.296" StartY="-968.2788" StartZ="-5947.63135" EndX="-3261.63965" EndY="-964.877563" EndZ="-5951.855" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_1.png -->
+  <Connection Name="[Levian Bay, Stalker's Den] Jump up layered rocks #2" MapId="1387" StartX="-3262.81177" StartY="-964.8215" StartZ="-5955.191" EndX="-3262.89648" EndY="-961.2188" EndZ="-5960.50635" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_1.png -->
+  <Connection Name="[Levian Bay, Stalker's Den] Walk off layered rocks #3" MapId="1387" StartX="-3264.79565" StartY="-961.165344" StartZ="-5962.754" EndX="-3274.44238" EndY="-968.3124" EndZ="-5946.76465" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_1.png -->
+  <Connection Name="[Levian Bay, Engineering Sublevel Theta] Go down pathway" MapId="1387" StartX="-1862.43311" StartY="-981.8073" StartZ="-6239.8623" EndX="-1860.74744" EndY="-988.011536" EndZ="-6226.181" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_2.png -->
+  <Connection Name="[Levian Bay, Engineering Sublevel Theta] Go up pathway" MapId="1387" StartX="-1853.64282" StartY="-984.9616" StartZ="-6235.73145" EndX="-1859.45984" EndY="-981.910461" EndZ="-6243.2207" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_2.png -->
+  <Connection Name="[Levian Bay, Greyshore] Go into ship" MapId="1387" StartX="-2526.30249" StartY="-958.7073" StartZ="-4959.75732" EndX="-2543.17285" EndY="-952.0098" EndZ="-4965.67" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/LevianBay_3.png -->
+
+  <Connection Name="[Ellevar, Lightreach Mission] Go up stairs near taxi" MapId="22" StartX="0.04585268" StartY="0" StartZ="0" EndX="0.04585268" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_1.png -->
+  <Connection Name="[Ellevar, Lightreach Mission] Go into generic building." MapId="22" StartX="0.04585268" StartY="0" StartZ="0" EndX="0.04585268" EndY="0" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_2.png -->
+  <Connection Name="[Ellevar, Lightreach Mission] Jump down from church." MapId="22" StartX="0.04585268" StartY="0" StartZ="0" EndX="0.04585268" EndY="0" EndZ="0" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_3.png -->
+  <Connection Name="[Ellevar, Larallen Highlands] Shortcut jump from Vigilant's Stand" MapId="22" StartX="-3188.52417" StartY="-790.8973" StartZ="-3643.89087" EndX="-3197.78613" EndY="-802.5678" EndZ="-3633.20483" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_4.png -->
+  <Connection Name="[Ellevar, The Queen's Lair] Enter Cave" MapId="22" StartX="-2512.731" StartY="-697.267456" StartZ="-2647.54468" EndX="-2504.63281" EndY="-696.3068" EndZ="-2623.607" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_5.png -->
+  <Connection Name="[Ellevar, Bio-Mech Stockade] Use teleporter to enter." MapId="22" StartX="-3078.19214" StartY="-800.105652" StartZ="-3143.13721" EndX="-3083.353" EndY="-796.6473" EndZ="-3168.474" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_6.png -->
+  <Connection Name="[Ellevar, Bio-Mech Stockade] Use teleporter to leave." MapId="22" StartX="-3097.13354" StartY="-889.8946" StartZ="-3139.59814" EndX="-3097.212" EndY="-887.662" EndZ="-3126.834" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_7.png -->
+  <Connection Name="[Ellevar, Bio-Mech Facility] Jump up small platform." MapId="22" StartX="-3428.56616" StartY="-746.0127" StartZ="-2953.9397" EndX="-3434.68726" EndY="-743.295532" EndZ="-2952.39917" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_8.png -->
+  <Connection Name="[Ellevar, Calidor's Excavation] (Enter) Go through teleporter." MapId="22" StartX="-2940.04541" StartY="-756.451965" StartZ="-2492.502" EndX="-2911.335" EndY="-748.0293" EndZ="-2483.31934" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_9.png -->
+  <Connection Name="[Ellevar, Bio-Mech Complex AH47 Level One] (Exit) Go through teleporter." MapId="22" StartX="-2937.24536" StartY="-856.336" StartZ="-2609.33887" EndX="-2937.68" EndY="-854.635254" EndZ="-2620.26221" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_10.png -->
+  <Connection Name="[Ellevar, Bio-Mech Complex AH47 Level One] Jump up to control panel" MapId="22" StartX="-2939.17041" StartY="-858.8234" StartZ="-2481.54883" EndX="-2938.46" EndY="-854.861145" EndZ="-2475.34229" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_11.png -->
+  <Connection Name="[Ellevar, Bio-Mech Complex AH47 Level Two] (Enter) Go through teleporter." MapId="22" StartX="-2938.216" StartY="-854.3929" StartZ="-2334.01172" EndX="-2937.36914" EndY="-850.6372" EndZ="-2314.85474" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_12.png -->
+  <Connection Name="[Ellevar, Bio-Mech Complex AH47 Level Two] (Exit) Go through teleporter." MapId="22" StartX="-3106.06787" StartY="-944.3066" StartZ="-2429.661" EndX="-3106.99023" EndY="-936.2936" EndZ="-2397.30737" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_13.png -->
+  <Connection Name="[Ellevar, Recombination Chamber] (Enter) Go through teleporater" MapId="22" StartX="-2808.99023" StartY="-961.6193" StartZ="-2368.023" EndX="-2808.99829" EndY="-955.5304" EndZ="-2343.15527" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" />
+  <!-- enu.li/dominion/Ellevar_14.png -->
+  <Connection Name="[Ellevar, Recombination Chamber] (Exit #1) Jump up to teleport pad" MapId="22" StartX="-2973.776" StartY="-1081.69092" StartZ="-2430.494" EndX="-2974.23853" EndY="-1078.7804" EndZ="-2423.573" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_15.png -->
+  <Connection Name="[Ellevar, Recombination Chamber] (Exit #1) Go through teleport pad" MapId="22" StartX="-2974.23853" StartY="-1078.7804" StartZ="-2423.573" EndX="-2974.48438" EndY="-1077.65625" EndZ="-2414.67725" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Ellevar_15.png -->
+  <!--<Connection Name="[Ellevar, Research Station Tideborn] Go through tower portal ENTER." MapId="22" StartX="-1984.36951" StartY="-650.640564" StartZ="-4171.076" EndX="-19mm81.39856" EndY="-649.1591" EndZ="-4176.42041" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Teleport" /> enu.li/dominion/Ellevar_16.png Loading screen will occur.  Something strange happened to the EndX.  Needs to be looked into. -->
+  <!--<Connection Name="[Ellevar, Research Station Tideborn] Go through tower portal EXIT." MapId="2161" StartX="0.6634712" StartY="15.7879276" StartZ="0.03968972" EndX="0" EndY="2.662467E-43" EndZ="0" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />  enu.li/dominion/Ellevar_17.png Loading screen will occur.   Something strange happen to the EndXYZ.  Needs to be looked into. -->
+
+  <Connection Name="[Auroria, Hycrest] Walk up unmeshed ramp." MapId="22" StartX="-2448.89526" StartY="-881.6607" StartZ="-1814.11023" EndX="-2435.34521" EndY="-878.805664" EndZ="-1803.1759" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_1.png -->
+  <Connection Name="[Auroria, Hycrest] Shortcut - Off ledge unmeshed ramp." MapId="22" StartX="-2437.7417" StartY="-878.7993" StartZ="-1797.004" EndX="-2421.15771" EndY="-905.964539" EndZ="-1784.76184" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_2.png -->
+  <Connection Name="[Auroria, Proxbrew Enclave] Walk around machinery" MapId="22" StartX="-2102.24121" StartY="-1001.78455" StartZ="-1591.661" EndX="-2103.553" EndY="-1003.00348" EndZ="-1609.104" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_3.png -->
+  <Connection Name="[Auroria, Cubig Farms] Jump up on platform." MapId="22" StartX="-2093.94434" StartY="-876.0842" StartZ="-2047.67334" EndX="-2090.58765" EndY="-874.143555" EndZ="-2044.66345" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_4.png  The steps seen in this screenshot aren't solid. -->
+  <Connection Name="[Auroria, Fieldclaw Hollow] Jump up angled rock in cave for quest" MapId="22" StartX="-1738.67285" StartY="-903.4453" StartZ="-2422.55347" EndX="-1734.2041" EndY="-898.6712" EndZ="-2420.53662" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_5.png -->
+  <Connection Name="[Auroria, Mozyk Mining Concern] Jump up on large rock for quest." MapId="22" StartX="-1799.287" StartY="-902.2962" StartZ="-1833.80359" EndX="-1792.5863" EndY="-900.180969" EndZ="-1831.36414" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_6.png -->
+  <Connection Name="[Auroria, The Walking Grounds]  Jump up on platform." MapId="22" StartX="-1333.65051" StartY="-934.487244" StartZ="-1523.69727" EndX="-1339.13782" EndY="-932.280945" EndZ="-1521.04" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_7.png -->
+  <Connection Name="[Auroria, Toiling Fields] Hop on haystack #1" MapId="22" StartX="-1659.43445" StartY="-919.776062" StartZ="-851.2606" EndX="-1654.96777" EndY="-912.9658" EndZ="-859.572144" Radius="0.4" Direction="StartToEnd" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_8.png -->
+  <Connection Name="[Auroria, Toiling Fields] Hop on haystack #2" MapId="22" StartX="-1655.66858" StartY="-912.4736" StartZ="-861.9903" EndX="-1651.78027" EndY="-908.8829" EndZ="-868.3053" Radius="0.4" Direction="StartToEnd" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_8.png -->
+  <Connection Name="[Auroria, Toiling Fields] Hop off haystack area #3" MapId="22" StartX="-1652.39893" StartY="-908.8841" StartZ="-869.907532" EndX="-1666.44055" EndY="-921.0627" EndZ="-865.359558" Radius="0.4" Direction="StartToEnd" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_8.png -->
+  <Connection Name="[Auroria, Toiling Fields] Hop on mini haystack" MapId="22" StartX="-1667.85974" StartY="-921.4719" StartZ="-873.5336" EndX="-1665.27039" EndY="-917.7151" EndZ="-876.9854" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_9.png -->
+  <Connection Name="[Auroria, The Noxious Glade] Jump up small rock" MapId="22" StartX="-1542.97339" StartY="-917.9236" StartZ="-1329.2915" EndX="-1539.19409" EndY="-914.430847" EndZ="-1333.84521" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Ground" />
+  <!-- enu.li/dominion/Auroria_10.png -->
+  <!-- END Dominion -->
+
+
+
+
+  <Connection Name="[Celestion, Exo-Site N22] Elevator" MapId="51" StartX="2729.8606" StartY="-954.5295" StartZ="-1657.90784" EndX="2743.68066" EndY="-982.3558" EndZ="-1644.07886" Radius="0.4" Direction="Bidirectional" AbilityFlags="Walk" AreaType="Elevator" UserData="33523" />
+  <Connection Name="[DominionArkShipTutorial, Bottom of the Command Deck] Elevator" MapId="1634" StartX="-1546.21716" StartY="207.67186" StartZ="-1259.44128" EndX="-1547.72778" EndY="188.995056" EndZ="-1242.71216" Radius="0.4" Direction="Bidirectional" AbilityFlags="DoubleJump" AreaType="Elevator" />
+</OffMeshConnections>

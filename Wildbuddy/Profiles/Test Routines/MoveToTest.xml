@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Profile Name="MoveTo Test" Author="Apoc" Version="1.0 TEST">
+  <!-- The Reference tag is basically a "do not execute" tag. It is meant to be used to hold tags only meant for references within the profile
+        No tags within this tag will be executed directly. Only when used via the RefTag="Name" semantic.
+  -->
+  <Reference>
+    <!-- 
+    Common Map IDs:
+    Western - 22
+    Eastern - 465
+    -->
+
+    <!--
+    
+    MoveTo Argument Reference:
+      RefName (optional)              - Available for all profile tags. Allows you to reference back to another element, and use it's arguments.
+                                          Currently no way to "overwrite" specific arguments. This may be added later.
+                
+      X/Y/Z (required)                - The location of where the player should move to.
+      MapId (optional)                - The ID of the map that this tag is valid for. If this
+      CreatureId (optional)           - The Creature ID of a creature in the game that we should move towards (if it exists)
+                                          This is useful for running up to NPCs and other interactable objects.
+                                          The closest creature in range from the XYZ, matching the CreatureId defined is used.
+      
+      Range (optional) [Default: 5]   - When within a specific range, the character should stop moving. 
+                                          If a matched CreatureId-based creature is found, this value is used as distance from creature
+    
+    -->
+    
+    <!-- This will get within 6 yards of Agent Lex on Western -->
+    <MoveTo RefName="MoveTo Agent Lex" X="-5600" Y="-980" Z="-640" MapId="22" CreatureId="26446" Range="6" />
+  </Reference>
+  
+  <!-- Reference the MoveTo Agent Lex tag's arguments -->
+  <MoveTo RefTag="MoveTo Agent Lex" />
+</Profile>

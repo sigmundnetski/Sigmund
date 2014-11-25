@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Profile Name="Jump Test" Author="Apoc" Version="1.0">
+  <Jump FromX="-5562.352" FromY="-985.5446" FromZ="-654.2994" MapId="22" ToX="-5559.012" ToY="-985.826" ToZ="-656.3373" DoubleJump="true" />
+</Profile>

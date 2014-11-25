@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Profile Name="Grind" Author="overture2112" Version="1.0 TEST">
+	<Grind Condition="True" >
+		<GrindArea>
+			<Hotspot X="431.642151" Y="-1078.70581" Z="-5355.39355" Timeout="60" Range="50" Name="New Hotspot" />
+		</GrindArea>
+	</Grind>
+</Profile>

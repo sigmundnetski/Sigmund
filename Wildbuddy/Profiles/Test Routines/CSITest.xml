@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Profile Name="Client Side Interaction Test" Author="Apoc" Version="1.0 TEST">
+  <!-- This CSI test profile is for Exile's level 9 in Everstar Grove. You'll find Ozliam somewhere near these coords.
+  Luckily, it has 4 types of CSI's all in the 1 quest. These are 4 "unique" kinds of CSIs, so it's possible to test all variants with this profile alone.
+  -->
+
+  <!-- Activate the Body Scanner [Press and Hold/Rapid Tap Test] -->
+  <Interact QuestId="6668" QuestObjective="0" CreatureId="31021" CreatureName="Ozliam's Body Scanner" MapId="51" X="1677.52527" Y="-913.2798" Z="-1916.40869" />
+  <CSIAction QuestId="6668" QuestObjective="0" />
+
+  <!-- Collect Ozliam's Tissue Sample [Precision Clicking/Metronome Test] -->
+  <Interact QuestId="6668" QuestObjective="1" CreatureId="31016" CreatureName="Ozliam's Tissue Sample" MapId="51" X="1686.19873" Y="-912.24646" Z="-1925.00012" />
+  <CSIAction QuestId="6668" QuestObjective="1" />
+
+  <!-- Activate Ozliam's Cloner Console [YesNo/Keypad Test] -->
+  <Interact QuestId="6668" QuestObjective="2" CreatureId="31018" CreatureName="Ozliam's Cloner Console" MapId="51" X="1665.09448" Y="-912.513245" Z="-1926.72961" />
+  <CSIAction QuestId="6668" QuestObjective="2" YesNoOrder="Y,Y,Y" />
+  
+  <!-- Activate Ozliam's Cloner [Memory Game Test] -->
+  <!-- This is also a tiny bit buggy... Interact has no way to determine "hey, we are good to go" -->
+  <Interact QuestId="6668" QuestObjective="3" CreatureId="31011" CreatureName="Ozliam's Cloner" MapId="51" X="1658.63989" Y="-911.5757" Z="-1927.88416" />
+  <CSIAction QuestId="6668" QuestObjective="3" />
+</Profile>
